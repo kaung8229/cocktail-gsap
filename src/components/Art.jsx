@@ -1,7 +1,6 @@
 import React from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { SplitText } from 'gsap/all';
 import { featureLists, goodLists } from '../../constants';
 import { useMediaQuery } from 'react-responsive';
 
@@ -74,7 +73,7 @@ function Art() {
 
                 <div className="masked-container">
                     <h2 className='will-fade'>Sip-Worthy Perfection</h2>
-                    <div id='masked-content'>
+                    <div id='masked-content' className='relative'>
                         <h3>Made with Craft, Poured with Passion</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo, aut.</p>
                     </div>
