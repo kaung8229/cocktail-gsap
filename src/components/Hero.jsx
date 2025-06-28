@@ -81,7 +81,7 @@ function Hero() {
 
                         <div className="view-cocktails">
                             <p className='subtitle'>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, tenetur! Quam ab molestiae, autem nisi illo quos ipsa enim asperiores, adipisci aliquid sunt recusandae vel, laborum similique inventore deserunt. Magni.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, tenetur! Quam ab molestiae, autem nisi illo quos ipsa enim asperiores.
                             </p>
                             <a href="#cocktails">View Cocktails</a>
                         </div>
@@ -90,7 +90,7 @@ function Hero() {
             </section>
 
             <div className='video absolute inset-0'>
-                <video ref={videoRef} src="/videos/input.mp4" muted playsInline preload='auto' />
+                <video ref={videoRef} src="/videos/output.mp4" muted playsInline preload='auto' />
             </div>
         </>
     )

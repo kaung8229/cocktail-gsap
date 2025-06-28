@@ -133,7 +133,7 @@ body {
     }
 
     video {
-        @apply w-full md:h-[80%] h-1/2 absolute bottom-0 left-0 md:object-contain object-bottom object-cover;
+        @apply absolute bottom-0 left-0 w-full h-1/2 md:h-[80%] object-cover md:object-contain object-bottom;
     }
 
     #cocktails {
@@ -216,7 +216,7 @@ body {
         }
 
         .top-grid {
-            @apply grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5 md:px-0 px-5;
+            @apply grid grid-cols-1 md:grid-cols-12 gap-5 mb-5 md:px-0 px-5;
 
             > div {
                 @apply rounded-3xl overflow-hidden h-72 relative;
