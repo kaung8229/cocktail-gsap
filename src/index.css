@@ -61,7 +61,7 @@ html, body{
 
     #hero{
         h1{
-            @apply relative z-10 font-modern-negra md:text-[20vw] text-7xl leading-none text-center mt-30;
+            @apply relative z-10 font-modern-negra md:text-[20vw] text-7xl leading-none text-center mt-30 max-md:mt-60;
         }
 
         #left-leaf {
@@ -151,7 +151,7 @@ html, body{
         }
 
         .cocktail-img{
-            @apply absolute-center z-30 md:w-[50vw] w-[calc(100%-40px)] md:h-[60vh] h-[50vh] rounded-4xl overflow-hidden;
+            @apply absolute-center z-30 sm:w-[50vw] w-[calc(100%-40px)] md:h-[60vh] h-[50vh] rounded-4xl overflow-hidden max-sm:mt-10;
 
             img{
                 @apply size-full object-cover;
