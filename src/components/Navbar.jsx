@@ -1,38 +1,33 @@
 import React from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/all'
 
 import { navLinks } from '../../constants/index.js'
 
 function Navbar() {
 
     useGSAP(()=>{
-        const navTween = gsap.timeline({
+        gsap.to('nav', {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(5px)',
             scrollTrigger: {
                 trigger: 'nav',
-                start: 'bottom top'
+                start: 'top top',
+                scrub: true
             }
-        });
-
-        navTween.fromTo('nav', {
-            backgroundColor: 'transparent'
-        }, {
-            backgroundColor: '#00000050',
-            backdropFilter: 'blur(10px)',
-            duration: 1,
-            ease: 'power1.inOut'
         })
-    })
+    }, []);
 
     return (
         <nav>
-            <div>
+            <div className='responsive-container flex md:flex-row flex-col md:justify-between items-center gap-2 py-5'>
                 <a href="#home" className='flex items-center gap-2'>
                     <img src="/images/logo.png" alt="logo" />
-                    <p>Velvet Pour</p>
+                    <p className='font-modern-negra text-3xl leading-1 mt-2'>Velvet Pour</p>
                 </a>
 
-                <ul>
+                <ul className='flex gap-3 text-nowrap'>
                     {navLinks.map((link) => (
                         <li key={link.id}>
                             <a href={`#${link.id}`}>{link.title}</a>

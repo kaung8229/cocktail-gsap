@@ -1,85 +1,80 @@
 import React from 'react'
+import { useMediaQuery } from 'react-responsive';
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { featureLists, goodLists } from '../../constants';
-import { useMediaQuery } from 'react-responsive';
+
+import { featureLists, goodLists } from '../../constants'
 
 function Art() {
 
-    const isMobile = useMediaQuery({ maxWidth: 767 });
-
     useGSAP(()=>{
-        const start = isMobile ? 'top 20%' : 'top top';
-
-        const maskTimeline = gsap.timeline({
+        const scrollTimeline = gsap.timeline({
             scrollTrigger: {
                 trigger: '#art',
-                start,
-                end: 'bottom center',
+                start: 'top top',
+                end: 'bottom top',
                 scrub: 1.5,
                 pin: true
             }
-        });
+        })
 
-        maskTimeline
+        scrollTimeline
             .to('.will-fade', {
                 opacity: 0,
                 stagger: 0.2,
                 ease: 'power1.inOut'
             })
             .to('.masked-img', {
+                duration: 1,
                 scale: 1.2,
-                maskPosition: 'center',
                 maskSize: '400%',
-                duration: 1,
                 ease: 'power1.inOut'
             })
-            .to('#masked-content', {
-                opacity: 1,
-                duration: 1,
-                ease: 'power1.inOut'
+            .from('.masked-content', {
+                opacity: 0
             })
-
-    })
-
+    }, [])
+    
     return (
-        <div id='art'>
-            <div className="container mx-auto h-full pt-20">
+        <section id='art'>
+            <div className='responsive-container'>
                 <h2 className="will-fade">The ART</h2>
 
-                <div className='content'>
-                    <ul className='space-y-4 will-fade'>
-                        {goodLists.map((feature, idx)=>(
-                            <li key={idx} className='flex items-center gap-2'>
-                                <img src="/images/check.png" alt="check" />
-                                <p>{feature}</p>
-                            </li>
-                        ))}
-                    </ul>
-
+                <div>
                     <div className="cocktail-img">
-                        <img className='abs-center masked-img size-full object-contain' src="/images/under-img.jpg" alt="cocktail image" />
+                        <img className='masked-img' src="/images/under-img.jpg" alt="cocktail image" />
                     </div>
 
-                    <ul className='space-y-4 will-fade'>
-                        {featureLists.map((feature, idx)=>(
-                            <li key={idx} className='flex items-center justify-start gap-2'>
-                                <img src="/images/check.png" alt="check" />
-                                <p className='w-60'>{feature}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                    <div className='flex md:flex-row flex-col justify-between max-md:h-100'>
+                        <ul className='max-md:flex flex-wrap items-center gap-3 md:space-y-4 will-fade'>
+                            {goodLists.map((feature, idx)=>(
+                                <li key={idx} className='flex items-center gap-2'>
+                                    <img src="/images/check.png" alt="check" />
+                                    <p>{feature}</p>
+                                </li>
+                            ))}
+                        </ul>
 
-                <div className="masked-container">
-                    <h2 className='will-fade'>Sip-Worthy Perfection</h2>
-                    <div id='masked-content' className='relative'>
-                        <h3>Made with Craft, Poured with Passion</h3>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo, aut.</p>
+                        <ul className='max-md:flex flex-wrap items-center gap-3 md:space-y-4 will-fade'>
+                            {featureLists.map((feature, idx)=>(
+                                <li key={idx} className='flex items-center gap-2'>
+                                    <img src="/images/check.png" alt="check" />
+                                    <p>{feature}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className='masked-container'>
+                        <h2 className='will-fade'>Sip-Worthy Perfection</h2>
+                        <div className='masked-content'>
+                            <h3>Made with Craft, Poured with Passion</h3>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo, aut.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 

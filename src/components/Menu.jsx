@@ -1,30 +1,17 @@
 import React, { useRef, useState } from 'react'
+import { useMediaQuery } from 'react-responsive';
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/all';
 import { sliderLists } from '../../constants';
-import { useMediaQuery } from 'react-responsive';
 
 function Menu() {
-    const contentRef = useRef();
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useGSAP(()=>{
-        gsap.fromTo('#title', {opacity: 0}, {opacity: 1, duration: 1});
-        gsap.fromTo('.cocktail img', {opacity: 0, xPercent: -100}, {opacity: 1, xPercent: 0, duration: 1});
-        gsap.fromTo('.details h2', {opacity: 0, yPercent: 100}, {opacity: 1, yPercent: 0, duration: 1, ease: 'power1.inOut'});
-        gsap.fromTo('.details p', {opacity: 0, yPercent: 100}, {opacity: 1, yPercent: 0, duration: 1, ease: 'power1.inOut'});
-
-        gsap.timeline({
-            scrollTrigger: {
-                trigger: '#menu',
-                start: 'top center',
-                end: 'bottom top',
-                scrub: true
-            }
-        })
-        .to('#m-left-leaf', {y: -100}, 0)
-        .to('#m-right-leaf', {y: 200}, 0)
+        gsap.from('.cocktail img', { xPercent: -100, opacity: 0 });
+        gsap.from('#title', { yPercent: 100, opacity: 0 });
+        gsap.from('.details p', { yPercent: 100, opacity: 0 });
     }, [currentIndex])
 
     const totalCocktails = sliderLists.length;
@@ -44,7 +31,7 @@ function Menu() {
     const nextCocktail = getCocktailAt(1);
 
     return (
-        <section id='menu' aria-label='menu-heading'>
+        <section id="menu">
             <img src="/images/slider-left-leaf.png" alt="left-leaf" id="m-left-leaf" />
             <img src="/images/slider-right-leaf.png" alt="right-leaf" id="m-right-leaf" />
 
@@ -52,47 +39,49 @@ function Menu() {
                 Cocktails menu
             </h2>
 
-            <nav className='cocktail-tabs' aria-label='cocktail navigation'>
-                {sliderLists.map((cocktail, idx) => {
-                    const isActive = idx == currentIndex;
+            <div className='responsive-container'>
+                <nav className='cocktail-tabs' aria-label='cocktail navigation'>
+                    {sliderLists.map((cocktail, idx) => {
+                        const isActive = idx == currentIndex;
+    
+                        return (
+                            <button key={cocktail.id} onClick={()=>goToSlide(idx)} className={`${isActive && `text-white border-white`}`}>
+                                {cocktail.name}
+                            </button>
+                        )
+                    })}
+                </nav>
 
-                    return (
-                        <button key={cocktail.id} onClick={()=>goToSlide(idx)} className={`${isActive ? `text-white border-white` : `text-white/50 border-white/50`}`}>
-                            {cocktail.name}
+                <div className='relative lg:h-100 md:h-80 h-60 max-md:mb-5'>
+                    <div className="arrows">
+                        <button className='text-left' onClick={()=>goToSlide(currentIndex - 1)}>
+                            <span>{prevCocktail.name}</span>
+                            <img src="/images/right-arrow.png" alt="right-arrow" aria-hidden="true" />
                         </button>
-                    )
-                })}
-            </nav>
 
-            <div className="content">
-                <div className="arrows">
-                    <button className='text-left' onClick={()=>goToSlide(currentIndex - 1)}>
-                        <span>{prevCocktail.name}</span>
-                        <img src="/images/right-arrow.png" alt="right-arrow" aria-hidden="true" />
-                    </button>
+                        <button className='text-right' onClick={()=>goToSlide(currentIndex + 1)}>
+                            <span>{nextCocktail.name}</span>
+                            <img className='ml-auto' src="/images/left-arrow.png" alt="left-arrow" aria-hidden="true" />
+                        </button>
+                    </div>
 
-                    <button className='text-right' onClick={()=>goToSlide(currentIndex + 1)}>
-                        <span>{nextCocktail.name}</span>
-                        <img className='ml-auto' src="/images/left-arrow.png" alt="left-arrow" aria-hidden="true" />
-                    </button>
-                </div>
-
-                <div className='cocktail'>
-                    <img className='object-contain size-80 xl:size-auto' src={currentCocktail.image } alt="" />
+                    <div className='cocktail'>
+                        <img className='h-full mx-auto' src={currentCocktail.image } alt="" />
+                    </div>
                 </div>
 
                 <div className="recipe">
-                    <div ref={contentRef} className='info'>
-                        <p>Recipe for :</p>
+                    <div className='cocktail-info'>
+                        <p className='shrink-0'>Recipe for :</p>
                         <p id='title'>{currentCocktail.name}</p>
                     </div>
                     <div className='details'>
-                        <h2>{currentCocktail.title}</h2>
+                        <p id='subtitle'>{currentCocktail.title}</p>
                         <p>{currentCocktail.description}</p>
                     </div>
                 </div>
+
             </div>
-            
         </section>
     )
 }

@@ -9,7 +9,7 @@ function Contact() {
     useGSAP(()=>{
         const titleSplit = SplitText.create('#contact h2', { type: 'words' });
 
-        const timeline = gsap.timeline({
+        const scrollTimeline = gsap.timeline({
             scrollTrigger: {
                 trigger: '#contact',
                 start: 'top center'
@@ -17,67 +17,59 @@ function Contact() {
             ease: 'power1.inOut'
         });
 
-        timeline
+        scrollTimeline
             .from(titleSplit.words, {
-                opacity: 0,
                 yPercent: 100,
+                opacity: 0,
                 stagger: 0.02
             })
-            .from('#contact h3, #contact p', {
-                opacity: 0,
+            .from('.info', {
                 yPercent: 100,
-                stagger: 0.02
+                opacity: 0,
+                stagger: 0.05
             })
-            .to('#f-right-leaf', {
-                y: -50,
-                duration: 1,
-                ease: 'power1.inOut'
-            }, 0)
-            .to('#f-left-leaf', {
-                y: 50,
-                duration: 1,
-                ease: 'power1.inOut'
-            }, 0)
     })
 
     return (
-        <footer id='contact'>
+        <section id='contact'>
             <img src="/images/footer-right-leaf.png" alt="right leaf" id='f-right-leaf' />
             <img src="/images/footer-left-leaf.png" alt="left leaf" id='f-left-leaf' />
 
-            <div className="content">
+            <div className='responsive-container'>
                 <h2>Where to Find Us</h2>
 
-                <div>
-                    <h3>Visit our store</h3>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
+                <div className='grid md:grid-cols-2 grid-cols-1 justify-items-center gap-5'>
+                    <div className='text-center info'>
+                        <h3>Visit our store</h3>
+                        <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
 
-                <div>
-                    <h3>Contact us</h3>
-                    <p>123456</p>
-                    <p>example@gmail.com</p>
-                </div>
+                    <div className='text-center info'>
+                        <h3>Contact us</h3>
+                        <p>123456</p>
+                        <p>example@gmail.com</p>
+                    </div>
 
-                <div>
-                    <h3>Open Daily</h3>
-                    {openingHours.map(time => (
-                        <p key={time.day}>
-                            {time.day} : {time.time}
-                        </p>
-                    ))}
-                </div>
+                    <div className='text-center info'>
+                        <h3>Open Daily</h3>
+                        {openingHours.map(time => (
+                            <p key={time.day}>
+                                {time.day} : {time.time}
+                            </p>
+                        ))}
+                    </div>
 
-                <div className='flex-center gap-5'>
-                    <h3>Socials</h3>
-                    {socials.map(social => (
-                        <a key={social.name} href={social.url} target='_blank' rel='noopener noreferrer' aria-label={social.name}>
-                            <img src={social.icon} alt="" />
-                        </a>
-                    ))}
+                    <div className='flex-center gap-5 info'>
+                        <h3>Socials</h3>
+                        {socials.map(social => (
+                            <a key={social.name} href={social.url} target='_blank' rel='noopener noreferrer' aria-label={social.name}>
+                                <img src={social.icon} alt="" />
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </footer>
+        </section>
     )
 }
 

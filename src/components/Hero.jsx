@@ -6,30 +6,28 @@ import { SplitText } from 'gsap/all';
 
 function Hero() {
     const videoRef = useRef();
-
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
     useGSAP(()=>{
-        const heroSplit = new SplitText('.title', {type: 'chars, words'});
-        const paragraphSplit = new SplitText('.subtitle', {type: 'lines'});
+        const titleSplit = SplitText.create('.title', { type: 'chars' });
+        const subtitleSplit = SplitText.create('.subtitle', { type: 'lines' });
 
-        heroSplit.chars.forEach(chars => chars.classList.add('text-gradient'));
+        titleSplit.chars.forEach(chars => chars.classList.add('text-gradient'));
 
-        gsap.from(heroSplit.chars, {
-            yPercent: 100,
+        gsap.timeline({
             duration: 1,
-            ease: 'expo.out',
-            stagger: 0.06
-        });
-
-        gsap.from(paragraphSplit.lines, {
+            ease: "expo.out"
+        })
+        .from(titleSplit.chars, { 
+            yPercent: 100, 
             opacity: 0,
-            yPercent: 100,
-            duration: 1.8,
-            ease: 'expo.out',
-            stagger: 0.06,
-            delay: 1
-        });
+            stagger: 0.02
+        })
+        .from(subtitleSplit.lines, { 
+            yPercent: 100, 
+            opacity: 0,
+            stagger: 0.02
+        })
 
         gsap.timeline({
             scrollTrigger: {
@@ -39,21 +37,20 @@ function Hero() {
                 scrub: true
             }
         })
-        .to('.right-leaf', { y: 200 }, 0)
-        .to('.left-leaf', { y: -200 }, 0)
+        .to('#right-leaf', { x: 200 }, 0)
+        .to('#left-leaf', { x: -200 }, 0)
 
-
-        const startValue = isMobile ? 'top 50%' : 'center 60%';
-        const endValue = isMobile ? '120% top' : 'bottom top';
+        const start = isMobile ? 'top 50%' : 'center 60%';
+        const end = isMobile ? '120% top' : 'bottom top';
 
         const videoTimeline = gsap.timeline({
             scrollTrigger: {
                 trigger: 'video',
-                start: startValue,
-                end: endValue,
-                scrub: true,
-                pin: true
-            }
+                start,
+                end,
+                scrub: 1
+            },
+            ease: 'none'
         });
 
         videoRef.current.onloadedmetadata = ()=>{
@@ -61,38 +58,35 @@ function Hero() {
                 currentTime: videoRef.current.duration
             })
         }
-
-    }, []);
+    }, [])
 
     return (
-        <>
-            <section id='hero' className='noisy'>
+        <section id='hero'>
+            <div className='noisy'></div>
+            <img id='left-leaf' src="/images/hero-left-leaf.png" alt="left leaf" />
+            <img id='right-leaf' src="/images/hero-right-leaf.png" alt="right leaf" />
+
+            <div className='relative z-10 responsive-container'>
                 <h1 className='title'>MAJITO</h1>
 
-                <img className='left-leaf' src="/images/hero-left-leaf.png" alt="left leaf" />
-                <img className='right-leaf' src="/images/hero-right-leaf.png" alt="right leaf" />
+                <div className='relative flex md:flex-row flex-col justify-between md:items-end'>
+                    <div className='space-y-5 md:block hidden'>
+                        <p className='subtitle'>Cool. Crisp. Classic.</p>
+                        <p className='font-modern-negra text-yellow text-5xl subtitle'>Sip the spirit <br/> of Summer</p>
+                    </div>
 
-                <div className='body'>
-                    <div className='content'>
-                        <div className='space-y-5 hidden md:block mt-20'>
-                            <p>Cool. Crisp. Classic.</p>
-                            <p className='subtitle'>Sip the spirit <br/> of Summer</p>
-                        </div>
-
-                        <div className="view-cocktails">
-                            <p className='subtitle'>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, tenetur! Quam ab molestiae, autem nisi illo quos ipsa enim asperiores.
-                            </p>
-                            <a href="#cocktails">View Cocktails</a>
-                        </div>
+                    <div className="flex flex-col gap-5 md:items-start items-center md:text-lg text-base lg:max-w-2xs md:max-w-xs w-full">
+                        <p className='md:text-left text-center subtitle'>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, tenetur! Quam ab molestiae, autem nisi illo quos ipsa enim asperiores.
+                        </p>
+                        <a href="#cocktails" className='hover:text-yellow subtitle'>View Cocktails</a>
                     </div>
                 </div>
-            </section>
-
-            <div className='video absolute inset-0'>
-                <video ref={videoRef} src="/videos/output.mp4" muted playsInline preload='auto' />
             </div>
-        </>
+            <div className='fixed bottom-0 w-full bg-black'>
+                <video ref={videoRef} className='md:w-[80%] max-md:h-[50vh] max-md:object-cover mx-auto' src="/videos/output.mp4" muted playsInline preload='auto' />
+            </div>
+        </section>
     )
 }
 

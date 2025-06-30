@@ -15,12 +15,11 @@
     --font-serif: "DM Serif Text", serif;
 }
 
-html,
-body {
+html, body{
     width: 100%;
-    background-color: black;
-    color: white;
-    scroll-behavior: smooth;
+    min-height: 100vh;
+    color: #fff;
+    background-color: #000;
     overflow-x: hidden;
 }
 
@@ -28,28 +27,12 @@ body {
     @apply flex justify-center items-center;
 }
 
-@utility col-center {
-    @apply flex flex-col justify-center items-center;
-}
-
-@utility abs-center {
+@utility absolute-center {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
-@utility text-gradient {
-    background: linear-gradient(to bottom, #ffffff, #898989);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-@utility radial-gradient {
-    background: radial-gradient(
-            circle at center,
-            #434343 0%,
-            #000 50%,
-            transparent 100%
-    );
+@utility responsive-container{
+    @apply container xl:px-30 px-5 mx-auto
 }
 
 @utility masked-img {
@@ -59,212 +42,134 @@ body {
     mask-size: 50%;
 }
 
-@layer components {
-    main {
-        @apply w-full min-h-screen overflow-hidden;
+@layer base{
+    main{
+        @apply relative;
     }
 
-    nav {
-        @apply fixed z-50 w-full;
+    nav{
+        @apply fixed top-0 z-50 w-full;
+    }
 
-        div {
-            @apply container flex flex-col md:flex-row md:justify-between items-center gap-5 py-5 px-5 mx-auto;
-        }
-
-        p {
-            @apply font-modern-negra text-3xl -mb-2;
-        }
-
-        a {
-            @apply cursor-pointer text-nowrap md:text-base text-sm;
-        }
-
-        ul {
-            @apply flex-center lg:gap-12 gap-7;
-        }
+    section{
+        @apply relative w-full min-h-screen overflow-hidden;
     }
 
     .noisy {
-        @apply absolute inset-0 size-full bg-[url("/images/noise.png")];
+        @apply absolute inset-0 z-5 size-full bg-[url("/images/noise.png")];
     }
 
-    #hero {
-        @apply relative z-10 min-h-screen w-full border border-transparent;
-
-        h1 {
-            @apply md:mt-32 mt-40 text-7xl md:text-[20vw] leading-none text-center font-modern-negra;
+    #hero{
+        h1{
+            @apply relative z-10 font-modern-negra md:text-[20vw] text-7xl leading-none text-center mt-30;
         }
 
-        .left-leaf {
-            @apply absolute left-0 md:top-20 xl:top-36 2xl:top-52 md:bottom-auto -bottom-20 md:w-fit w-1/3;
+        #left-leaf {
+            @apply absolute left-0 z-10 2xl:top-52 xl:top-36 md:top-20 md:bottom-auto -bottom-20 md:w-fit w-1/3 pointer-events-none select-none;
         }
 
-        .right-leaf {
-            @apply absolute right-0 md:bottom-0 xl:top-0 2xl:top-12 top-1/2 md:w-fit w-24;
-        }
-
-        .body {
-            @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 md:top-[40vh] flex justify-between items-end px-5;
-
-            .content {
-                @apply flex md:flex-row flex-col w-full gap-10 justify-between items-center md:items-end mx-auto;
-
-                p:nth-of-type(2) {
-                    @apply font-modern-negra text-6xl text-yellow max-w-xl;
-                }
-
-                p:last-of-type {
-                    @apply lg:text-left text-center;
-                }
-
-                .view-cocktails {
-                    @apply space-y-5 text-lg lg:max-w-2xs md:max-w-xs w-full;
-
-                    p {
-                        @apply lg:text-left text-center;
-                    }
-
-                    a {
-                        @apply font-semibold opacity-80 lg:text-start text-center hover:text-yellow;
-                    }
-                }
-            }
+        #right-leaf {
+            @apply absolute right-0 z-10 md:bottom-0 xl:top-0 2xl:top-12 top-1/2 md:w-fit w-24 pointer-events-none select-none;
         }
     }
 
-    video {
-        @apply absolute bottom-0 left-0 w-full h-1/2 md:h-[80%] object-cover md:object-contain object-bottom;
-    }
-
-    #cocktails {
-        @apply relative min-h-dvh w-full overflow-hidden;
-
+    #cocktails{
         #c-left-leaf {
-            @apply absolute left-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
+            @apply absolute left-0 md:top-0 md:bottom-auto bottom-20 md:w-fit w-1/3;
         }
 
         #c-right-leaf {
-            @apply absolute right-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
+            @apply absolute right-0 md:bottom-0 md:top-auto top-40 md:w-fit w-1/3;
         }
 
-        .list {
-            @apply container mx-auto relative z-10 flex md:flex-row flex-col justify-between items-start gap-20 pt-40 2xl:px-0 px-5;
+        .popular {
+            @apply relative space-y-8 w-full md:w-fit;
+        }
 
-            .popular {
-                @apply space-y-8 w-full md:w-fit;
-            }
+        .loved {
+            @apply relative space-y-8 w-full md:w-fit pb-20 md:pb-0;
+        }
 
-            .loved {
-                @apply space-y-8 w-full md:w-fit pb-20 md:pb-0;
-            }
+        h2{
+            @apply text-xl font-medium;
+        }
 
-            h2 {
-                @apply text-xl font-medium;
-            }
+        ul{
+            @apply space-y-5;
+            
+            li{
+                @apply flex items-center;
 
-            ul {
-                @apply space-y-8;
-
-                li {
-                    @apply flex justify-between items-start;
+                div{
+                    @apply md:w-60 w-full;
 
                     h3 {
-                        @apply font-modern-negra 2xl:text-3xl text-xl text-yellow;
+                        @apply font-modern-negra lg:text-3xl text-xl text-yellow;
                     }
 
                     p {
-                        @apply text-sm;
+                        @apply md:text-base text-sm;
                     }
+                }
 
-                    span {
-                        @apply text-xl font-medium;
-                    }
+                span {
+                    @apply shrink-0 text-xl font-medium;
                 }
             }
         }
     }
 
-    #about {
-        @apply min-h-screen py-28 2xl:px-0 px-5 container mx-auto;
+    #about{
+        @apply bg-black py-10;
 
-        .content {
-            @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
-
-            h2 {
-                @apply text-5xl md:text-6xl font-modern-negra max-w-lg;
-            }
-
-            .sub-content {
-                @apply md:col-span-4 space-y-5 flex flex-col justify-between;
-
-                p {
-                    @apply text-lg;
-                }
-
-                div {
-                    @apply flex flex-col justify-between md:gap-2 gap-5;
-
-                    span {
-                        @apply text-yellow font-bold text-5xl;
-                    }
-                }
-            }
+        .grid-item{
+            @apply relative rounded-xl overflow-hidden;
         }
 
         .badge {
-            @apply inline-block rounded-full bg-white text-black px-4 py-2 text-sm font-medium mb-8;
+            @apply inline-block rounded-full bg-white text-black px-4 py-2 text-sm font-medium mb-5;
         }
 
-        .top-grid {
-            @apply grid grid-cols-1 md:grid-cols-12 gap-5 mb-5 md:px-0 px-5;
-
-            > div {
-                @apply rounded-3xl overflow-hidden h-72 relative;
-            }
-
-            img {
-                @apply object-cover w-full h-full;
-            }
+        h2 {
+            @apply font-modern-negra md:text-6xl text-5xl max-w-lg;
         }
 
-        .bottom-grid {
-            @apply grid grid-cols-1 md:grid-cols-12 gap-5 md:px-0 px-5;
+        p {
+            @apply md:text-lg text-base;
+        }
 
-            > div {
-                @apply rounded-3xl overflow-hidden h-72 relative;
-            }
-
-            img {
-                @apply object-cover w-full h-full;
-            }
+        img{
+            @apply size-full object-cover;
         }
     }
 
-    #art {
-        @apply flex-center flex-col min-h-dvh p-5 mt-20 relative radial-gradient;
+    #art{
+        @apply bg-black py-20;
 
-        h2 {
-            @apply relative md:text-[20vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[#505050] mb-8;
+        h2{
+            @apply relative font-modern-negra md:text-[20vw] text-8xl text-nowrap leading-none text-center text-[#505050];
         }
 
-        .content {
-            @apply flex md:flex-row flex-col justify-between md:mb-16 md:mt-0 mt-20 gap-10;
+        .cocktail-img{
+            @apply absolute-center z-30 md:w-[50vw] w-[calc(100%-40px)] md:h-[60vh] h-[50vh] rounded-4xl overflow-hidden;
+
+            img{
+                @apply size-full object-cover;
+            }
         }
 
-        .cocktail-img {
-            @apply md:w-[50vw] w-full h-[50vh] md:h-[60vh] rounded-4xl overflow-hidden absolute top-0 md:top-1/3 md:-translate-y-1/2 left-1/2 -translate-x-1/2;
-        }
+        .masked-container{
+            @apply absolute bottom-10 left-1/2 -translate-x-1/2 w-full;
 
-        .masked-container {
-            h2 {
-                @apply text-4xl md:text-5xl font-modern-negra text-center mb-10 text-white mt-0;
+            h2{
+                @apply font-modern-negra md:text-5xl text-4xl text-center text-white mb-0;
             }
 
-            div {
-                @apply opacity-0 md:px-0 px-5 space-y-5 absolute md:bottom-30 bottom-12 left-1/2 -translate-x-1/2;
+            .masked-content{
+                @apply absolute bottom-0 w-full;
 
                 h3 {
-                    @apply md:text-5xl text-2xl text-center font-serif md:w-full w-80 text-white;
+                    @apply md:w-full font-serif md:text-5xl text-4xl text-center text-white;
                 }
 
                 p {
@@ -274,8 +179,8 @@ body {
         }
     }
 
-    #menu {
-        @apply relative w-full md:mt-40 mt-0 px-25 py-20 radial-gradient;
+    #menu{
+        @apply bg-black py-20;
 
         #m-left-leaf {
             @apply object-contain absolute -bottom-20 left-0 md:w-fit w-1/3;
@@ -286,52 +191,44 @@ body {
         }
 
         .cocktail-tabs {
-            @apply grid md:grid-cols-4 grid-cols-2 md:gap-20 gap-10 mb-0 relative z-10 md:max-w-6xl md:mx-auto;
+            @apply relative z-10 md:max-w-6xl grid md:grid-cols-4 grid-cols-2 md:gap-20 gap-5 md:mx-auto mb-0;
 
             button {
-                @apply md:text-3xl text-xl pb-2 cursor-pointer hover:text-yellow hover:border-yellow border-b-1 transition-colors font-modern-negra;
+                @apply font-modern-negra md:text-2xl text-xl text-white/50 hover:text-yellow border-b-1 hover:border-yellow cursor-pointer transition-colors pb-2;
             }
         }
 
-        .content {
-            @apply flex flex-col justify-between items-center container mx-auto relative;
+        .arrows {
+            @apply absolute top-1/2 -translate-y-1/2 z-30 w-full flex justify-between items-center md:px-20 lg:px-40;
 
-            .arrows {
-                @apply flex items-center justify-between w-full absolute top-50;
+            button {
+                @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36;
 
-                button {
-                    @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36;
-
-                    span {
-                        @apply text-3xl font-modern-negra leading-none hidden md:block;
-                    }
+                span {
+                    @apply md:block hidden text-2xl font-modern-negra leading-none;
                 }
             }
         }
 
         .cocktail {
-            @apply flex-center mt-10;
-
-            img {
-                @apply object-contain h-[60vh];
-            }
+            @apply absolute-center size-full lg:py-10 pt-5;
         }
 
         .recipe {
-            @apply flex max-md:flex-col gap-10 md:items-center justify-between w-full xl:absolute bottom-0;
+            @apply w-full md:h-70 flex max-md:flex-col md:justify-between md:items-center gap-5;
 
-            .info {
-                @apply space-y-4;
+            .cocktail-info {
+                @apply md:space-y-4 max-md:flex items-center gap-5;
 
                 #title {
-                    @apply font-modern-negra md:text-6xl text-3xl text-yellow max-w-40;
+                    @apply font-modern-negra md:text-6xl text-4xl text-yellow md:max-w-40;
                 }
             }
 
             .details {
                 @apply space-y-5 md:max-w-md text-left;
 
-                h2 {
+                #subtitle {
                     @apply md:text-5xl text-3xl font-serif;
                 }
 
@@ -342,35 +239,24 @@ body {
         }
     }
 
-    #contact {
-        @apply relative md:mt-20 mt-0 px-4 text-center w-full overflow-hidden radial-gradient;
+    #contact{
+        @apply min-h-[50vh] bg-black py-20;
 
         #f-left-leaf {
             @apply absolute bottom-0 left-0 pointer-events-none lg:w-fit w-1/3;
         }
 
         #f-right-leaf {
-            @apply absolute top-0 right-0 pointer-events-none hidden lg:block;
+            @apply absolute top-0 right-0 pointer-events-none lg:w-fit w-1/3;
         }
 
-        .content {
-            @apply container mx-auto lg:py-14 2xl:py-32 py-16 flex flex-col justify-between gap-10 min-h-dvh;
-
-            h2 {
-                @apply lg:text-6xl 2xl:text-8xl text-5xl font-modern-negra md:translate-y-0 translate-y-5;
-            }
-
-            h3 {
-                @apply uppercase xl:text-base 2xl:text-lg text-base mb-2;
-            }
-
-            p {
-                @apply lg:text-2xl 2xl:text-3xl text-sm;
-            }
+        h2 {
+            @apply font-modern-negra 2xl:text-8xl lg:text-6xl text-5xl text-center mb-10;
         }
 
-        .drink-img {
-            @apply absolute bottom-0 right-0 lg:w-96 w-1/3 pointer-events-none;
+        h3 {
+            @apply uppercase 2xl:text-lg xl:text-base text-base font-bold mb-2;
         }
     }
 }
+
