@@ -26,7 +26,7 @@ function Cocktails() {
             <img src="/images/cocktail-left-leaf.png" alt="left leaf" id='c-left-leaf' />
             <img src="/images/cocktail-right-leaf.png" alt="right leaf" id='c-right-leaf' />
 
-            <div className='responsive-container relative z-20 flex md:flex-row flex-col md:justify-between items-center gap-8'>
+            <div className='responsive-container flex md:flex-row flex-col md:justify-between items-center gap-8'>
                 <div className='popular'>
                     <h2>Most popular cocktails:</h2>
 

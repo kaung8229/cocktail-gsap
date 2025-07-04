@@ -37,27 +37,27 @@ function Art() {
     
     return (
         <section id='art'>
-            <div className='responsive-container h-full'>
+            <div className='responsive-container'>
                 <h2 className="will-fade">The ART</h2>
 
-                <div className='sm:h-[70%] h-[80%]'>
+                <div>
                     <div className="cocktail-img">
                         <img className='masked-img' src="/images/under-img.jpg" alt="cocktail image" />
                     </div>
 
-                    <div className='flex md:flex-row flex-col justify-between max-md:h-full'>
-                        <ul className='max-md:flex flex-wrap justify-center items-center gap-3 md:space-y-4 will-fade'>
+                    <div className='flex md:flex-row flex-col justify-between max-md:h-100'>
+                        <ul className='max-md:flex flex-wrap items-center gap-3 md:space-y-4 will-fade'>
                             {goodLists.map((feature, idx)=>(
-                                <li key={idx} className='flex items-center max-sm:w-70 gap-2'>
+                                <li key={idx} className='flex items-center gap-2'>
                                     <img src="/images/check.png" alt="check" />
                                     <p>{feature}</p>
                                 </li>
                             ))}
                         </ul>
 
-                        <ul className='max-md:flex flex-wrap justify-center items-center gap-3 md:space-y-4 will-fade'>
+                        <ul className='max-md:flex flex-wrap items-center gap-3 md:space-y-4 will-fade'>
                             {featureLists.map((feature, idx)=>(
-                                <li key={idx} className='flex items-center max-sm:w-70 gap-2'>
+                                <li key={idx} className='flex items-center gap-2'>
                                     <img src="/images/check.png" alt="check" />
                                     <p>{feature}</p>
                                 </li>
